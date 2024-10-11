@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="gnome-shell-extensions">
   <schema id="org.gnome.shell.extensions.fullscreen-avoider" path="/org/gnome/shell/extensions/fullscreen-avoider/">
     <key name="move-hot-corners" type="b">
@@ -9,6 +10,11 @@
       <default>true</default>
       <summary>Move Notifications</summary>
       <description>Move Notifications</description>
+    </key>
+    <key name="secondary-monitor" type="i">
+      <default>-1</default>
+      <summary>Secondary monitor</summary>
+      <description>Monitor to use when the primary is in full-screen</description>
     </key>
   </schema>
 </schemalist>

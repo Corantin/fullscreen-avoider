@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 const Gio = imports.gi.Gio;
 const Gtk = imports.gi.Gtk;
@@ -26,6 +26,7 @@ function buildPrefsWidget() {
 
 	box.append(buildSwitcher(settings, 'move-hot-corners', _('Move Hot Corners:')));
 	box.append(buildSwitcher(settings, 'move-notifications', _('Move Notifications:')));
+  box.append(buildIntInput(settings, "secondary-monitor", _("Secondary Monitor:")));
 
 	return box;
 }
@@ -37,10 +38,32 @@ function buildSwitcher(settings, key, labeltext) {
 
 	let switcher = new Gtk.Switch();
 
-	settings.bind(key, switcher, 'active', Gio.SettingsBindFlags.DEFAULT);
+  settings.bind(key, switcher, "active", Gio.SettingsBindFlags.DEFAULT);
 
 	hbox.append(label);
 	hbox.append(switcher);
 
 	return hbox;
+}
+
+function buildIntInput(settings, key, labeltext) {
+  let hbox = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, spacing: 10 });
+  let label = new Gtk.Label({ label: labeltext });
+  
+  const input = new Gtk.SpinButton({
+    adjustment: new Gtk.Adjustment({
+      lower: -1, // Adjust these as needed
+      upper: 10, // Set upper limit based on the number of monitors
+      step_increment: 1,
+    }),
+    value: settings.get_int(key),
+    valign: Gtk.Align.CENTER,
+  });
+
+  settings.bind(key, input, "value", Gio.SettingsBindFlags.DEFAULT);
+
+  hbox.append(label);
+	hbox.append(input);
+
+  return hbox;
 }
